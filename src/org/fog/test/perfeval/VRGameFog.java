@@ -38,7 +38,7 @@ import org.fog.utils.distribution.DeterministicDistribution;
 /**
  * Simulation setup for case study 1 - EEG Beam Tractor Game
  * @author Harshit Gupta  
- * war eagle
+ * war eagle  
  */
 public class VRGameFog {
 	static List<FogDevice> fogDevices = new ArrayList<FogDevice>();
