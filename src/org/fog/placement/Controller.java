@@ -75,7 +75,7 @@ public class Controller extends SimEntity{
 			else
 				send(getId(), getAppLaunchDelays().get(appId), FogEvents.APP_SUBMIT, applications.get(appId));
 		}
-
+ 
 		send(getId(), Config.RESOURCE_MANAGE_INTERVAL, FogEvents.CONTROLLER_RESOURCE_MANAGE);
 		
 		send(getId(), Config.MAX_SIMULATION_TIME, FogEvents.STOP_SIMULATION);
