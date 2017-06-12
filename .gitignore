@@ -5,3 +5,4 @@ bin/
 .vscode/
 .sublime-project/
 .sublime-workspace/
+.DS_Store/
