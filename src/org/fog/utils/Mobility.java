@@ -1,11 +1,28 @@
 package org.fog.utils;
 
+import org.cloudbus.cloudsim.Log;
+import org.cloudbus.cloudsim.core.CloudSim;
+
+/**
+ * This class is meant to add mobility features onto FogDevice, Actuator, and Sensor currently being used in iFogSim. 
+ * It's purpose is to allow the movement of fog devices between the areas of influence of clusterhead. This is accomplished
+ * with the use of 2D vector that's updated every time the update function is called.   
+ * 
+ * @author AviRynderman
+ * @since NSF REU 2017 - Parallel and Distributed Computing
+ */
 public class Mobility {
+	private static final boolean DEBUG = true; 
 	private double longitude;
 	private double latitude;
+	// Vectors to denote movement per second of device.
 	private double xVector;
 	private double yVector;
+	// Determines the moveability of the device
 	private boolean isMobile;
+	// Keep track of last update time. When updateLocation() is called, this will be compared
+	// with the current clock value and the total movement adjustment calculated 
+	private double counter;
 	
 	public Mobility(double latitude, double longitude, double xVector, double yVector, boolean isMobile){
 		this.latitude = latitude;
@@ -13,16 +30,34 @@ public class Mobility {
 		this.isMobile = isMobile;
 		this.xVector = xVector;
 		this.yVector = yVector;
+		counter = CloudSim.clock();
 	}
+	
+	// Updates the device location
 	private void updateLocation(){
-		// Update the latitude and longitude based on vector.
-		// Note, this function should depend on time.
-		// Further research needs to be completed as to how this might be done.
-		// I think using CloudSim.Clock() is the way to go.
+		boolean logStatus = Log.isDisabled();
+		if(DEBUG){
+			Log.enable();
+		}
+		// Get the difference between last time the clock was updated and the current simulation time
+		double scalar = CloudSim.clock() - counter;
+		// Now update the simulation time stored in the mobility class
+		counter = CloudSim.clock();
+		// Output for testing
+		String str = "---- Scalar = " + scalar;
+		if(isMobile){
+			this.latitude +=scalar*this.xVector;
+			this.longitude += scalar*this.yVector;	
+		}
+		if(DEBUG){
+			Log.printLine(str);
+			if(logStatus)
+				Log.disable();
+		}
 	} 
 	public double getVelocity() {
 		double velocity;
-		velocity = Math.sqrt(this.latitude*this.latitude+this.longitude*this.longitude);
+		velocity = Math.sqrt(this.latitude*this.latitude + this.longitude*this.longitude);
 		return velocity;
 	}
 	public double getAngleRad() {
