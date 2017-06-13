@@ -35,6 +35,12 @@ public class AppEdge {
 	 * Direction of tuples carried by the application edge.
 	 */
 	private int direction;
+
+	/**
+	 * SENSOR = 1
+	 * ACTUATOR = 2
+	 * MODULE = 3
+	 */
 	private int edgeType;
 	
 	/**
